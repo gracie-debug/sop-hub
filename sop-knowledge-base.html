@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOP Knowledge Base</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F8F7F4;
+    --surface: #FFFFFF;
+    --surface-hover: #F3F2EF;
+    --border: #E5E3DC;
+    --border-strong: #C8C5BC;
+    --text-primary: #1A1916;
+    --text-secondary: #6B6860;
+    --text-muted: #9C9A94;
+    --accent: #2E6BE6;
+    --accent-bg: #EBF1FD;
+    --accent-text: #1A4FAD;
+    --tag-colors: #5B4FE8, #0F6E56, #993C1D, #854F0B, #993556, #185FA5;
+    --radius: 8px;
+    --sidebar-w: 240px;
+    --font: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* TOPBAR */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text-primary);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .topbar-brand .brand-icon {
+    width: 28px;
+    height: 28px;
+    background: var(--text-primary);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+  }
+  .topbar-search {
+    flex: 1;
+    max-width: 480px;
+    position: relative;
+  }
+  .topbar-search i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 16px;
+  }
+  .topbar-search input {
+    width: 100%;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0 12px 0 34px;
+    font-family: var(--font);
+    font-size: 14px;
+    background: var(--bg);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .topbar-search input:focus { border-color: var(--accent); }
+  .topbar-search input::placeholder { color: var(--text-muted); }
+  .topbar-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+  .btn {
+    height: 36px;
+    padding: 0 14px;
+    border-radius: var(--radius);
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-primary);
+    transition: background 0.12s, border-color 0.12s;
+    white-space: nowrap;
+  }
+  .btn:hover { background: var(--surface-hover); border-color: var(--border-strong); }
+  .btn-primary { background: var(--text-primary); color: white; border-color: var(--text-primary); }
+  .btn-primary:hover { background: #2d2b27; border-color: #2d2b27; }
+
+  /* LAYOUT */
+  .layout { display: flex; flex: 1; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+  }
+  .sidebar-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 8px 16px 4px;
+  }
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.1s;
+    font-size: 13.5px;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+  }
+  .sidebar-item:hover { background: var(--surface-hover); color: var(--text-primary); }
+  .sidebar-item.active { background: var(--accent-bg); color: var(--accent-text); font-weight: 500; }
+  .sidebar-item i { font-size: 16px; flex-shrink: 0; }
+  .sidebar-item .count {
+    margin-left: auto;
+    font-size: 11px;
+    background: var(--border);
+    color: var(--text-secondary);
+    border-radius: 10px;
+    padding: 1px 7px;
+    font-weight: 500;
+  }
+  .sidebar-item.active .count { background: #c9d9f8; color: var(--accent-text); }
+  .sidebar-divider { height: 1px; background: var(--border); margin: 8px 0; }
+
+  /* MAIN */
+  .main { flex: 1; padding: 28px 32px; overflow-y: auto; }
+  .page-header { margin-bottom: 24px; }
+  .page-title { font-size: 20px; font-weight: 600; }
+  .page-subtitle { color: var(--text-secondary); font-size: 13px; margin-top: 4px; }
+
+  /* STATS */
+  .stats-row { display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    min-width: 120px;
+    flex: 1;
+  }
+  .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-bottom: 6px; }
+  .stat-value { font-size: 22px; font-weight: 600; }
+
+  /* SEARCH RESULTS BAR */
+  .results-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .results-bar .results-count { font-size: 13px; color: var(--text-secondary); }
+  .results-bar .clear-btn {
+    font-size: 12px;
+    color: var(--accent);
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: var(--font);
+    padding: 0;
+  }
+  .results-bar .clear-btn:hover { text-decoration: underline; }
+
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* SOP CARD */
+  .sop-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .sop-card:hover {
+    border-color: var(--border-strong);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .sop-card-header { display: flex; align-items: flex-start; gap: 10px; }
+  .sop-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .sop-card-title { font-weight: 500; font-size: 14px; line-height: 1.4; }
+  .sop-card-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .sop-card-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .sop-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 4px; border-top: 1px solid var(--border); }
+  .tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .sop-card-actions { display: flex; gap: 6px; }
+  .icon-btn {
+    width: 28px; height: 28px;
+    border: none; background: none;
+    cursor: pointer;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted);
+    font-size: 15px;
+    transition: background 0.1s, color 0.1s;
+  }
+  .icon-btn:hover { background: var(--surface-hover); color: var(--text-primary); }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 64px 24px;
+    color: var(--text-secondary);
+  }
+  .empty-state i { font-size: 40px; color: var(--text-muted); margin-bottom: 12px; display: block; }
+  .empty-state h3 { font-size: 16px; font-weight: 500; margin-bottom: 6px; color: var(--text-primary); }
+  .empty-state p { font-size: 13px; }
+
+  /* UPLOAD AREA */
+  .upload-zone {
+    border: 2px dashed var(--border-strong);
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    background: var(--surface);
+    margin-bottom: 24px;
+  }
+  .upload-zone:hover, .upload-zone.drag-over {
+    border-color: var(--accent);
+    background: var(--accent-bg);
+  }
+  .upload-zone i { font-size: 32px; color: var(--text-muted); margin-bottom: 10px; display: block; }
+  .upload-zone h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+  .upload-zone p { font-size: 13px; color: var(--text-secondary); }
+  .upload-zone .supported { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(10, 9, 8, 0.5);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 200;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--surface);
+    border-radius: 12px;
+    width: 520px;
+    max-width: calc(100vw - 32px);
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.16);
+    transform: translateY(8px);
+    transition: transform 0.15s;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-header {
+    padding: 20px 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .modal-header h2 { font-size: 16px; font-weight: 600; }
+  .modal-body { padding: 0 20px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .modal-footer { padding: 0 20px 20px; display: flex; justify-content: flex-end; gap: 8px; border-top: 1px solid var(--border); padding-top: 16px; }
+
+  .field-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+    display: block;
+  }
+  .field-input, .field-select, .field-textarea {
+    width: 100%;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0 12px;
+    font-family: var(--font);
+    font-size: 13px;
+    background: var(--surface);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .field-input:focus, .field-select:focus, .field-textarea:focus { border-color: var(--accent); }
+  .field-textarea { height: 80px; padding: 8px 12px; resize: vertical; }
+  .field-select { appearance: none; cursor: pointer; }
+
+  /* VIEWER */
+  .viewer-overlay {
+    position: fixed; inset: 0;
+    background: rgba(10, 9, 8, 0.6);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 300;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  .viewer-overlay.open { opacity: 1; pointer-events: all; }
+  .viewer {
+    background: var(--surface);
+    border-radius: 12px;
+    width: 720px;
+    max-width: calc(100vw - 32px);
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    transform: translateY(8px);
+    transition: transform 0.15s;
+  }
+  .viewer-overlay.open .viewer { transform: translateY(0); }
+  .viewer-topbar {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    background: var(--surface);
+    z-index: 1;
+  }
+  .viewer-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .viewer-title h2 { font-size: 16px; font-weight: 600; }
+  .viewer-title p { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+  .viewer-body { padding: 24px; }
+  .viewer-section { margin-bottom: 20px; }
+  .viewer-section h3 { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .viewer-content { font-size: 14px; line-height: 1.75; color: var(--text-secondary); white-space: pre-wrap; }
+  .viewer-actions { display: flex; gap: 8px; margin-left: auto; }
+
+  /* HIGHLIGHT */
+  mark { background: #fff3b0; border-radius: 2px; padding: 0 1px; color: inherit; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--text-primary);
+    color: white;
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 400;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; }
+
+  /* SEARCH HIGHLIGHT in descriptions */
+  .highlight-text mark { background: #fde68a; }
+
+  input[type="file"] { display: none; }
+
+  @media (max-width: 680px) {
+    .sidebar { display: none; }
+    .main { padding: 16px; }
+    .stats-row { flex-wrap: wrap; }
+    .stat-card { min-width: calc(50% - 6px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <a class="topbar-brand" href="#">
+    <div class="brand-icon"><i class="ti ti-books"></i></div>
+    SOP Hub
+  </a>
+  <div class="topbar-search">
+    <i class="ti ti-search"></i>
+    <input type="text" id="searchInput" placeholder="Search SOPs, steps, keywords…" autocomplete="off">
+  </div>
+  <div class="topbar-actions">
+    <button class="btn btn-primary" id="addSopBtn"><i class="ti ti-plus"></i>Add SOP</button>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <span class="sidebar-section-label">Browse</span>
+    <button class="sidebar-item active" data-filter="all">
+      <i class="ti ti-layout-grid"></i> All SOPs
+      <span class="count" id="countAll">0</span>
+    </button>
+    <button class="sidebar-item" data-filter="recent">
+      <i class="ti ti-clock"></i> Recently added
+    </button>
+
+    <div class="sidebar-divider"></div>
+    <span class="sidebar-section-label">Categories</span>
+    <div id="sidebarCategories"></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="mainContent">
+    <div class="page-header">
+      <h1 class="page-title" id="pageTitle">All SOPs</h1>
+      <p class="page-subtitle" id="pageSubtitle">Your team's standard operating procedures in one place</p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card">
+        <div class="stat-label">Total SOPs</div>
+        <div class="stat-value" id="statTotal">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Categories</div>
+        <div class="stat-value" id="statCats">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Last updated</div>
+        <div class="stat-value" id="statDate" style="font-size:14px; margin-top:6px; font-weight:500;">—</div>
+      </div>
+    </div>
+
+    <!-- RESULTS BAR (search) -->
+    <div class="results-bar" id="resultsBar" style="display:none;">
+      <span class="results-count" id="resultsCount"></span>
+      <button class="clear-btn" id="clearSearch">Clear search</button>
+    </div>
+
+    <!-- CARD GRID -->
+    <div class="card-grid" id="sopGrid"></div>
+  </main>
+</div>
+
+<!-- ADD SOP MODAL -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modalTitle">Add SOP</h2>
+      <button class="icon-btn" id="closeModal"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div>
+        <label class="field-label">Title *</label>
+        <input class="field-input" id="fieldTitle" placeholder="e.g. How to process a return request">
+      </div>
+      <div>
+        <label class="field-label">Category</label>
+        <select class="field-select" id="fieldCategory">
+          <option value="">— choose or type below —</option>
+          <option>Amazon Operations</option>
+          <option>Customer Service</option>
+          <option>Inventory</option>
+          <option>Listings</option>
+          <option>Advertising</option>
+          <option>Finance</option>
+          <option>HR & Onboarding</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label">Custom category (overrides selection)</label>
+        <input class="field-input" id="fieldCustomCat" placeholder="Type a new category…">
+      </div>
+      <div>
+        <label class="field-label">Short description</label>
+        <input class="field-input" id="fieldDesc" placeholder="One line summary">
+      </div>
+      <div>
+        <label class="field-label">SOP content / steps</label>
+        <textarea class="field-textarea" id="fieldContent" style="height:120px" placeholder="Paste the full SOP here. Step 1: …&#10;Step 2: …&#10;Step 3: …"></textarea>
+      </div>
+
+      <!-- Upload file option -->
+      <div>
+        <label class="field-label">Or upload a file</label>
+        <div class="upload-zone" id="uploadZone" style="padding:20px; margin-bottom:0;">
+          <i class="ti ti-cloud-upload"></i>
+          <h3>Drop a file or click to browse</h3>
+          <p class="supported">Supported: .txt, .md, .pdf (text will be extracted)</p>
+        </div>
+        <input type="file" id="fileInput" accept=".txt,.md,.pdf,.doc,.docx">
+        <p id="uploadedFileName" style="font-size:12px; color: var(--accent); margin-top:6px; display:none;"></p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" id="cancelModal">Cancel</button>
+      <button class="btn btn-primary" id="saveModal">Save SOP</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW SOP -->
+<div class="viewer-overlay" id="viewerOverlay">
+  <div class="viewer">
+    <div class="viewer-topbar">
+      <div class="viewer-icon" id="vIcon"></div>
+      <div class="viewer-title">
+        <h2 id="vTitle"></h2>
+        <p id="vMeta"></p>
+      </div>
+      <div class="viewer-actions">
+        <button class="btn" id="vEditBtn"><i class="ti ti-edit"></i>Edit</button>
+        <button class="icon-btn" id="closeViewer"><i class="ti ti-x"></i></button>
+      </div>
+    </div>
+    <div class="viewer-body">
+      <div class="viewer-section">
+        <h3>Description</h3>
+        <div class="viewer-content" id="vDesc"></div>
+      </div>
+      <div class="viewer-section" id="vContentSection">
+        <h3>Steps / Content</h3>
+        <div class="viewer-content" id="vContent"></div>
+      </div>
+      <div class="viewer-section">
+        <h3>Details</h3>
+        <div class="viewer-content" id="vDetails"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ─── DATA ─── */
+const STORAGE_KEY = 'sop_kb_v2';
+let sops = [];
+let editingId = null;
+let activeFilter = 'all';
+let searchQuery = '';
+
+const CAT_COLORS = [
+  { bg:'#EBF1FD', text:'#1A4FAD', icon:'ti-chart-bar' },
+  { bg:'#E1F5EE', text:'#0F5A44', icon:'ti-package' },
+  { bg:'#FAECE7', text:'#7A2D14', icon:'ti-tag' },
+  { bg:'#FAEEDA', text:'#6B3D09', icon:'ti-coin' },
+  { bg:'#FBEAF0', text:'#7A2344', icon:'ti-users' },
+  { bg:'#EEEDFE', text:'#3B2EA8', icon:'ti-settings' },
+  { bg:'#EAF3DE', text:'#2E540D', icon:'ti-list-check' },
+  { bg:'#F1EFE8', text:'#4A4840', icon:'ti-file-text' },
+];
+const CAT_ICONS = {
+  'amazon operations': 'ti-shopping-cart',
+  'customer service': 'ti-headset',
+  'inventory': 'ti-package',
+  'listings': 'ti-tag',
+  'advertising': 'ti-speakerphone',
+  'finance': 'ti-coin',
+  'hr & onboarding': 'ti-users',
+  'other': 'ti-dots',
+};
+
+function catStyle(name) {
+  const keys = Object.keys(catColorMap());
+  const idx = keys.indexOf(name.toLowerCase()) % CAT_COLORS.length;
+  return CAT_COLORS[Math.max(0, idx)];
+}
+function catColorMap() {
+  const map = {};
+  sops.forEach(s => { map[s.category.toLowerCase()] = s.category; });
+  return map;
+}
+function catIcon(name) {
+  return CAT_ICONS[name.toLowerCase()] || 'ti-file-text';
+}
+
+/* ─── STORAGE ─── */
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(sops)); } catch(e) {}
+}
+function load() {
+  try {
+    const d = localStorage.getItem(STORAGE_KEY);
+    if (d) sops = JSON.parse(d);
+  } catch(e) { sops = []; }
+}
+
+/* ─── SEED DATA ─── */
+function seedIfEmpty() {
+  if (sops.length) return;
+  sops = [
+    {
+      id: 'seed1',
+      title: 'How to process a return request',
+      category: 'Customer Service',
+      desc: 'Step-by-step for handling buyer return requests on Amazon Seller Central.',
+      content: `Step 1: Log in to Seller Central and navigate to Orders > Manage Returns.\n\nStep 2: Filter by "Pending" status to find new requests.\n\nStep 3: Review the buyer's reason code. If reason is "No longer needed" or "Bought by mistake", proceed to Step 4. If reason is "Defective" or "Not as described", escalate to the QC team.\n\nStep 4: Click "Authorize Return" and select the correct return window (30 days standard).\n\nStep 5: Send a pre-paid return label if applicable to your marketplace policy.\n\nStep 6: Once item is received at FC, issue a full refund within 2 business days.\n\nStep 7: Log the return in the tracker sheet with: Order ID, ASIN, reason code, refund amount, date.`,
+      date: '2025-06-10',
+    },
+    {
+      id: 'seed2',
+      title: 'Creating and optimizing a new listing',
+      category: 'Listings',
+      desc: 'End-to-end process for launching a new product listing from scratch.',
+      content: `Step 1: Gather product info — title, bullet points, description, images (main + lifestyle), backend keywords.\n\nStep 2: In Seller Central, go to Catalog > Add a Product.\n\nStep 3: Search for the product category. Select the most specific category possible.\n\nStep 4: Fill in all required fields. Title must follow the category-specific style guide (max 200 chars).\n\nStep 5: Write 5 bullet points. Each should lead with a key benefit, not a feature. Max 255 chars each.\n\nStep 6: Upload images. Main image must be on white background, minimum 1000x1000px.\n\nStep 7: Enter backend keywords in the Search Terms field. Do not repeat words already in the title.\n\nStep 8: Set pricing, fulfillment method (FBA or FBM), and quantity.\n\nStep 9: Submit. Monitor for suppressed listing alerts in the next 24h.`,
+      date: '2025-06-14',
+    },
+    {
+      id: 'seed3',
+      title: 'Inventory restock checklist',
+      category: 'Inventory',
+      desc: 'Weekly checklist for identifying low-stock ASINs and creating shipment plans.',
+      content: `Step 1: Every Monday, pull the FBA Inventory report from Reports > Fulfillment.\n\nStep 2: Filter for items with Days of Supply < 45. These are restock candidates.\n\nStep 3: Cross-reference with the sales velocity report (last 90 days) to confirm rank.\n\nStep 4: For each restock ASIN, calculate quantity needed: (90-day daily avg × 60 days) − current stock.\n\nStep 5: Submit PO to supplier by Tuesday noon. CC warehouse coordinator.\n\nStep 6: Create shipment plan in Seller Central: Inventory > Send to Amazon.\n\nStep 7: Track shipment status daily until "Checked In" at the FC.\n\nStep 8: Update the restock tracker sheet with PO number, units ordered, expected arrival date.`,
+      date: '2025-06-18',
+    },
+    {
+      id: 'seed4',
+      title: 'Build International Listings (BIL) sync setup',
+      category: 'Amazon Operations',
+      desc: 'How to reconnect and configure BIL to sync US listings to EU marketplaces.',
+      content: `Step 1: Go to Seller Central (US) > Inventory > Build International Listings.\n\nStep 2: Verify the Source Marketplace is set to "Amazon.com (US)". If not, click "Edit" and reselect.\n\nStep 3: Confirm all EU target marketplaces are connected: UK, DE, FR, IT, ES, SE, NL, PL, BE, IE.\n\nStep 4: Review the Sync Settings — ensure "Price Rules" and "Offer Synchronization" are both enabled.\n\nStep 5: Run a catalog audit. Export BIL exceptions report and resolve ASIN mismatches.\n\nStep 6: For any ASIN showing as "Not eligible", check for compliance issues (WEEE, CE marking, etc.).\n\nStep 7: After reconnecting, wait 24–48h for initial sync to propagate.\n\nStep 8: Spot-check 10 listings per marketplace to confirm prices and availability are live.`,
+      date: '2025-06-20',
+    },
+    {
+      id: 'seed5',
+      title: 'Onboarding a new VA',
+      category: 'HR & Onboarding',
+      desc: 'Checklist for getting a new virtual assistant set up and productive.',
+      content: `Day 1:\n- Send welcome email with Slack invite and this SOP Hub link.\n- Provide Seller Central limited-access login (read-only to start).\n- Schedule 30-min orientation call.\n\nDay 2–3:\n- Share access to Google Drive SOPs folder.\n- Assign first tasks: shadowing order management, reviewing return requests.\n- Add to relevant Asana projects.\n\nWeek 1:\n- Daily check-ins (15 min Slack huddle).\n- Review first completed tasks with feedback.\n- Grant additional Seller Central permissions as trust is established.\n\nWeek 2+:\n- Transition to weekly check-ins.\n- Assign independent tasks with clear deadlines.\n- Add to Slack channel for the relevant marketplace team.`,
+      date: '2025-06-22',
+    },
+  ];
+  save();
+}
+
+/* ─── UTILS ─── */
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+function esc(s) { return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+function highlight(text, q) {
+  if (!q) return esc(text);
+  const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return esc(text).replace(regex, '<mark>$1</mark>');
+}
+function fmtDate(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+function allCategories() {
+  return [...new Set(sops.map(s => s.category).filter(Boolean))].sort();
+}
+
+/* ─── RENDER ─── */
+function render() {
+  let filtered = [...sops];
+
+  if (activeFilter === 'recent') {
+    filtered = filtered.sort((a, b) => (b.date || '').localeCompare(a.date || '')).slice(0, 10);
+  } else if (activeFilter !== 'all') {
+    filtered = filtered.filter(s => s.category === activeFilter);
+  }
+
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    filtered = filtered.filter(s =>
+      s.title.toLowerCase().includes(q) ||
+      (s.desc || '').toLowerCase().includes(q) ||
+      (s.content || '').toLowerCase().includes(q) ||
+      (s.category || '').toLowerCase().includes(q)
+    );
+  }
+
+  const grid = document.getElementById('sopGrid');
+  const statsRow = document.getElementById('statsRow');
+  const resultsBar = document.getElementById('resultsBar');
+
+  statsRow.style.display = searchQuery ? 'none' : 'flex';
+  resultsBar.style.display = searchQuery ? 'flex' : 'none';
+  if (searchQuery) {
+    document.getElementById('resultsCount').textContent = `${filtered.length} result${filtered.length !== 1 ? 's' : ''} for "${searchQuery}"`;
+  }
+
+  // Update stats
+  document.getElementById('statTotal').textContent = sops.length;
+  document.getElementById('statCats').textContent = allCategories().length;
+  const last = sops.slice().sort((a,b) => (b.date||'').localeCompare(a.date||''))[0];
+  document.getElementById('statDate').textContent = last ? fmtDate(last.date) : '—';
+  document.getElementById('countAll').textContent = sops.length;
+
+  // Sidebar categories
+  const catDiv = document.getElementById('sidebarCategories');
+  catDiv.innerHTML = '';
+  allCategories().forEach(cat => {
+    const count = sops.filter(s => s.category === cat).length;
+    const style = catStyle(cat);
+    const btn = document.createElement('button');
+    btn.className = 'sidebar-item' + (activeFilter === cat ? ' active' : '');
+    btn.dataset.filter = cat;
+    btn.innerHTML = `<i class="ti ${catIcon(cat)}"></i> ${esc(cat)} <span class="count">${count}</span>`;
+    btn.addEventListener('click', () => setFilter(cat));
+    catDiv.appendChild(btn);
+  });
+
+  // Cards
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <i class="ti ti-folder-off"></i>
+      <h3>${searchQuery ? 'No SOPs match your search' : 'No SOPs here yet'}</h3>
+      <p>${searchQuery ? 'Try different keywords' : 'Click "Add SOP" to create your first one'}</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(sop => {
+    const style = catStyle(sop.category);
+    return `<div class="sop-card" data-id="${sop.id}">
+      <div class="sop-card-header">
+        <div class="sop-card-icon" style="background:${style.bg}; color:${style.text}">
+          <i class="ti ${catIcon(sop.category)}"></i>
+        </div>
+        <div>
+          <div class="sop-card-title">${highlight(sop.title, searchQuery)}</div>
+          <div class="sop-card-meta">${sop.category}${sop.date ? ' · ' + fmtDate(sop.date) : ''}</div>
+        </div>
+      </div>
+      ${sop.desc ? `<div class="sop-card-desc">${highlight(sop.desc, searchQuery)}</div>` : ''}
+      <div class="sop-card-footer">
+        <span class="tag" style="background:${style.bg}; color:${style.text}">${esc(sop.category)}</span>
+        <div class="sop-card-actions">
+          <button class="icon-btn edit-btn" data-id="${sop.id}" title="Edit"><i class="ti ti-edit"></i></button>
+          <button class="icon-btn delete-btn" data-id="${sop.id}" title="Delete"><i class="ti ti-trash"></i></button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  grid.querySelectorAll('.sop-card').forEach(card => {
+    card.addEventListener('click', e => {
+      if (e.target.closest('.edit-btn') || e.target.closest('.delete-btn')) return;
+      openViewer(card.dataset.id);
+    });
+  });
+  grid.querySelectorAll('.edit-btn').forEach(btn => btn.addEventListener('click', () => openEdit(btn.dataset.id)));
+  grid.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', () => deleteSop(btn.dataset.id)));
+}
+
+function setFilter(f) {
+  activeFilter = f;
+  document.querySelectorAll('.sidebar-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.filter === f);
+  });
+  const titles = { all: 'All SOPs', recent: 'Recently added' };
+  document.getElementById('pageTitle').textContent = titles[f] || f;
+  document.getElementById('pageSubtitle').textContent =
+    f === 'all' ? 'Your team\'s standard operating procedures in one place'
+    : f === 'recent' ? 'The 10 most recently added SOPs'
+    : `SOPs in the ${f} category`;
+  render();
+}
+
+/* ─── VIEWER ─── */
+function openViewer(id) {
+  const sop = sops.find(s => s.id === id);
+  if (!sop) return;
+  const style = catStyle(sop.category);
+  document.getElementById('vIcon').style.background = style.bg;
+  document.getElementById('vIcon').style.color = style.text;
+  document.getElementById('vIcon').innerHTML = `<i class="ti ${catIcon(sop.category)}" style="font-size:20px"></i>`;
+  document.getElementById('vTitle').textContent = sop.title;
+  document.getElementById('vMeta').textContent = `${sop.category}${sop.date ? ' · Added ' + fmtDate(sop.date) : ''}`;
+  document.getElementById('vDesc').textContent = sop.desc || 'No description.';
+  document.getElementById('vContent').textContent = sop.content || '';
+  document.getElementById('vContentSection').style.display = sop.content ? '' : 'none';
+  document.getElementById('vDetails').textContent = `Category: ${sop.category}\nAdded: ${fmtDate(sop.date) || 'Unknown'}`;
+  document.getElementById('vEditBtn').onclick = () => { closeViewer(); openEdit(id); };
+  document.getElementById('viewerOverlay').classList.add('open');
+}
+function closeViewer() { document.getElementById('viewerOverlay').classList.remove('open'); }
+document.getElementById('closeViewer').addEventListener('click', closeViewer);
+document.getElementById('viewerOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeViewer(); });
+
+/* ─── ADD / EDIT MODAL ─── */
+function openAdd() {
+  editingId = null;
+  document.getElementById('modalTitle').textContent = 'Add SOP';
+  document.getElementById('fieldTitle').value = '';
+  document.getElementById('fieldCategory').value = '';
+  document.getElementById('fieldCustomCat').value = '';
+  document.getElementById('fieldDesc').value = '';
+  document.getElementById('fieldContent').value = '';
+  document.getElementById('uploadedFileName').style.display = 'none';
+  document.getElementById('addModal').classList.add('open');
+  setTimeout(() => document.getElementById('fieldTitle').focus(), 100);
+}
+function openEdit(id) {
+  const sop = sops.find(s => s.id === id);
+  if (!sop) return;
+  editingId = id;
+  document.getElementById('modalTitle').textContent = 'Edit SOP';
+  document.getElementById('fieldTitle').value = sop.title;
+  document.getElementById('fieldCategory').value = sop.category;
+  document.getElementById('fieldCustomCat').value = '';
+  document.getElementById('fieldDesc').value = sop.desc || '';
+  document.getElementById('fieldContent').value = sop.content || '';
+  document.getElementById('uploadedFileName').style.display = 'none';
+  document.getElementById('addModal').classList.add('open');
+}
+function closeModal() { document.getElementById('addModal').classList.remove('open'); editingId = null; }
+
+document.getElementById('addSopBtn').addEventListener('click', openAdd);
+document.getElementById('closeModal').addEventListener('click', closeModal);
+document.getElementById('cancelModal').addEventListener('click', closeModal);
+document.getElementById('addModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+
+document.getElementById('saveModal').addEventListener('click', () => {
+  const title = document.getElementById('fieldTitle').value.trim();
+  if (!title) { document.getElementById('fieldTitle').focus(); showToast('Title is required'); return; }
+  const customCat = document.getElementById('fieldCustomCat').value.trim();
+  const category = customCat || document.getElementById('fieldCategory').value || 'Other';
+  const desc = document.getElementById('fieldDesc').value.trim();
+  const content = document.getElementById('fieldContent').value.trim();
+
+  if (editingId) {
+    const idx = sops.findIndex(s => s.id === editingId);
+    if (idx >= 0) { sops[idx] = { ...sops[idx], title, category, desc, content }; }
+    showToast('SOP updated');
+  } else {
+    sops.unshift({ id: uid(), title, category, desc, content, date: new Date().toISOString().slice(0, 10) });
+    showToast('SOP added');
+  }
+  save();
+  render();
+  closeModal();
+});
+
+/* ─── DELETE ─── */
+function deleteSop(id) {
+  if (!confirm('Delete this SOP? This cannot be undone.')) return;
+  sops = sops.filter(s => s.id !== id);
+  save();
+  render();
+  showToast('SOP deleted');
+}
+
+/* ─── SEARCH ─── */
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchQuery = e.target.value.trim();
+  render();
+});
+document.getElementById('clearSearch').addEventListener('click', () => {
+  document.getElementById('searchInput').value = '';
+  searchQuery = '';
+  render();
+});
+
+/* ─── FILE UPLOAD ─── */
+const uploadZone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+
+uploadZone.addEventListener('click', () => fileInput.click());
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) handleFile(file);
+});
+fileInput.addEventListener('change', e => {
+  if (e.target.files[0]) handleFile(e.target.files[0]);
+});
+function handleFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    let text = e.target.result;
+    if (!document.getElementById('fieldTitle').value.trim()) {
+      document.getElementById('fieldTitle').value = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+    }
+    document.getElementById('fieldContent').value = text;
+    document.getElementById('uploadedFileName').textContent = `✓ File loaded: ${file.name}`;
+    document.getElementById('uploadedFileName').style.display = 'block';
+  };
+  reader.readAsText(file);
+}
+
+/* ─── SIDEBAR STATIC ITEMS ─── */
+document.querySelectorAll('.sidebar-item[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => setFilter(btn.dataset.filter));
+});
+
+/* ─── TOAST ─── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+/* ─── KEYBOARD ─── */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeViewer(); }
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+    document.getElementById('searchInput').select();
+  }
+});
+
+/* ─── INIT ─── */
+load();
+seedIfEmpty();
+render();
+</script>
+</body>
+</html>
