@@ -140,7 +140,7 @@
 
 <div class="hero">
   <div class="hero-eyebrow">Account Specialist Portal</div>
-  <div class="hero-title">Standard operating procedures</div>
+  <div class="hero-title">Standard Operating Procedures</div>
   <div class="hero-sub">Your central reference for how we operate — search by task, keyword, or category.</div>
 </div>
 
@@ -218,9 +218,13 @@ function highlight(text, q) {
 }
 function fmtDate(s) {
   if (!s) return '';
-  const d = new Date(s);
+  let d;
+  const gm = String(s).match(/Date\((\d+),(\d+),(\d+)\)/);
+  if (gm) { d = new Date(parseInt(gm[1]), parseInt(gm[2]), parseInt(gm[3])); }
+  else { d = new Date(s); }
   if (isNaN(d)) return s;
   return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+});
 }
 
 async function fetchSheet() {
