@@ -3,116 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOP Hub — Account Specialist Portal</title>
+<title>SOP Library — Luminary Retailers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #F8F7F4;
+    --bg: #F2F1EE;
     --surface: #FFFFFF;
-    --surface-hover: #F3F2EF;
-    --border: #E5E3DC;
+    --surface-hover: #F7F6F3;
+    --border: #E4E2DC;
     --border-strong: #C8C5BC;
-    --text-primary: #1A1916;
-    --text-secondary: #6B6860;
-    --text-muted: #9C9A94;
-    --accent: #2E6BE6;
-    --accent-bg: #EBF1FD;
-    --accent-text: #1A4FAD;
-    --radius: 8px;
-    --sidebar-w: 220px;
+    --text-primary: #1C1B18;
+    --text-secondary: #7A7870;
+    --text-muted: #B0AEA6;
+    --orange: #ff5e2b;
+    --orange-bg: #FFF1EC;
+    --orange-border: #FFD4C2;
+    --orange-text: #C43B0D;
+    --radius: 7px;
+    --sidebar-w: 210px;
     --font: 'Inter', system-ui, sans-serif;
   }
   body { font-family: var(--font); background: var(--bg); color: var(--text-primary); font-size: 14px; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
 
   /* TOPBAR */
-  .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; height: 52px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 100; }
-  .topbar-brand { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--text-primary); text-decoration: none; white-space: nowrap; }
-  .brand-icon { width: 28px; height: 28px; background: var(--text-primary); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; }
+  .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; height: 52px; display: flex; align-items: center; gap: 14px; position: sticky; top: 0; z-index: 100; }
+  .topbar-brand { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-primary); text-decoration: none; white-space: nowrap; }
+  .brand-dot { color: var(--orange); }
   .topbar-search { flex: 1; max-width: 440px; position: relative; }
-  .topbar-search i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 16px; pointer-events: none; }
-  .topbar-search input { width: 100%; height: 34px; border: 1px solid var(--border); border-radius: var(--radius); padding: 0 12px 0 34px; font-family: var(--font); font-size: 13px; background: var(--bg); color: var(--text-primary); outline: none; transition: border-color 0.15s; }
-  .topbar-search input:focus { border-color: var(--accent); }
+  .topbar-search i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 15px; pointer-events: none; }
+  .topbar-search input { width: 100%; height: 34px; border: 1px solid var(--border); border-radius: var(--radius); padding: 0 12px 0 32px; font-family: var(--font); font-size: 13px; background: var(--bg); color: var(--text-primary); outline: none; transition: border-color 0.15s; }
+  .topbar-search input:focus { border-color: var(--orange); }
   .topbar-search input::placeholder { color: var(--text-muted); }
-  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
-  .btn { height: 34px; padding: 0 14px; border-radius: var(--radius); font-family: var(--font); font-size: 13px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--text-primary); transition: background 0.12s; white-space: nowrap; }
-  .btn:hover { background: var(--surface-hover); border-color: var(--border-strong); }
-  .btn-sm { height: 28px; padding: 0 10px; font-size: 12px; }
-  .refresh-btn { color: var(--text-secondary); }
-  .refresh-btn i { font-size: 15px; }
+  .topbar-right { margin-left: auto; }
+  .btn { height: 34px; padding: 0 14px; border-radius: var(--radius); font-family: var(--font); font-size: 12px; font-weight: 500; letter-spacing: 0.03em; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--text-secondary); transition: background 0.12s, border-color 0.12s; white-space: nowrap; }
+  .btn:hover { background: var(--surface-hover); border-color: var(--border-strong); color: var(--text-primary); }
+
+  /* HERO */
+  .hero { background: var(--surface); border-bottom: 1px solid var(--border); padding: 28px 24px 24px; }
+  .hero-eyebrow { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 8px; }
+  .hero-title { font-size: 28px; font-weight: 400; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .hero-sub { font-size: 13px; color: var(--text-secondary); line-height: 1.6; max-width: 460px; }
 
   /* LAYOUT */
   .layout { display: flex; flex: 1; }
 
   /* SIDEBAR */
-  .sidebar { width: var(--sidebar-w); background: var(--surface); border-right: 1px solid var(--border); padding: 12px 0; display: flex; flex-direction: column; position: sticky; top: 52px; height: calc(100vh - 52px); overflow-y: auto; flex-shrink: 0; }
-  .sidebar-label { font-size: 10.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; padding: 8px 14px 3px; }
-  .sidebar-item { display: flex; align-items: center; gap: 8px; padding: 7px 14px; color: var(--text-secondary); cursor: pointer; font-size: 13px; border: none; background: none; width: 100%; text-align: left; transition: background 0.1s; }
+  .sidebar { width: var(--sidebar-w); background: var(--surface); border-right: 1px solid var(--border); padding: 14px 0; display: flex; flex-direction: column; position: sticky; top: 52px; height: calc(100vh - 52px); overflow-y: auto; flex-shrink: 0; }
+  .sidebar-label { font-size: 9.5px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.13em; padding: 8px 16px 3px; display: block; }
+  .sidebar-item { display: flex; align-items: center; gap: 8px; padding: 7px 16px; color: var(--text-secondary); cursor: pointer; font-size: 12.5px; border: none; background: none; width: 100%; text-align: left; border-left: 2px solid transparent; transition: background 0.1s; }
   .sidebar-item:hover { background: var(--surface-hover); color: var(--text-primary); }
-  .sidebar-item.active { background: var(--accent-bg); color: var(--accent-text); font-weight: 500; }
-  .sidebar-item i { font-size: 15px; flex-shrink: 0; }
-  .sidebar-item .count { margin-left: auto; font-size: 11px; background: var(--border); color: var(--text-secondary); border-radius: 10px; padding: 1px 6px; font-weight: 500; }
-  .sidebar-item.active .count { background: #c9d9f8; color: var(--accent-text); }
+  .sidebar-item.active { color: var(--orange); border-left-color: var(--orange); background: var(--orange-bg); font-weight: 500; }
+  .sidebar-item i { font-size: 14px; flex-shrink: 0; }
+  .sidebar-item .count { margin-left: auto; font-size: 10.5px; background: var(--bg); color: var(--text-muted); border-radius: 10px; padding: 1px 6px; }
+  .sidebar-item.active .count { background: #FFD4C2; color: var(--orange-text); }
   .sidebar-divider { height: 1px; background: var(--border); margin: 6px 0; }
 
   /* MAIN */
   .main { flex: 1; padding: 24px 28px; min-width: 0; }
-  .page-header { margin-bottom: 20px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-  .page-header-text h1 { font-size: 18px; font-weight: 600; }
-  .page-header-text p { color: var(--text-secondary); font-size: 13px; margin-top: 3px; }
+  .page-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
+  .page-title { font-size: 17px; font-weight: 500; letter-spacing: -0.01em; }
+  .page-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
 
   /* STATS */
-  .stats-row { display: flex; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; }
-  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; flex: 1; min-width: 100px; }
-  .stat-label { font-size: 11px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
-  .stat-value { font-size: 20px; font-weight: 600; }
+  .stats-row { display: flex; gap: 9px; margin-bottom: 18px; flex-wrap: wrap; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 15px; flex: 1; min-width: 100px; }
+  .stat-label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; }
+  .stat-value { font-size: 22px; font-weight: 500; }
 
   /* RESULTS BAR */
   .results-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
   .results-count { font-size: 13px; color: var(--text-secondary); }
-  .clear-btn { font-size: 12px; color: var(--accent); cursor: pointer; border: none; background: none; font-family: var(--font); padding: 0; }
+  .clear-btn { font-size: 12px; color: var(--orange); cursor: pointer; border: none; background: none; font-family: var(--font); padding: 0; }
   .clear-btn:hover { text-decoration: underline; }
 
   /* GRID */
-  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
 
   /* SOP CARD */
-  .sop-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.15s, box-shadow 0.15s; }
-  .sop-card:hover { border-color: var(--border-strong); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .sop-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.15s; cursor: pointer; }
+  .sop-card:hover { border-color: var(--border-strong); }
   .sop-card-header { display: flex; align-items: flex-start; gap: 10px; }
-  .sop-icon { width: 34px; height: 34px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
-  .sop-card-title { font-weight: 500; font-size: 13.5px; line-height: 1.4; }
-  .sop-card-meta { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
-  .sop-card-desc { font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .sop-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 6px; border-top: 1px solid var(--border); margin-top: 2px; }
-  .tag { font-size: 11px; font-weight: 500; padding: 2px 7px; border-radius: 4px; }
-  .open-btn { height: 26px; padding: 0 10px; font-size: 11.5px; border-radius: 5px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--border); background: none; cursor: pointer; font-family: var(--font); color: var(--text-secondary); font-weight: 500; transition: background 0.1s, color 0.1s; text-decoration: none; }
-  .open-btn:hover { background: var(--accent-bg); color: var(--accent-text); border-color: var(--accent); }
+  .sop-icon { width: 32px; height: 32px; border-radius: 6px; background: var(--orange-bg); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--orange); flex-shrink: 0; }
+  .sop-card-title { font-weight: 500; font-size: 13px; line-height: 1.35; }
+  .sop-card-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .sop-card-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .sop-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 8px; border-top: 1px solid var(--bg); margin-top: 2px; }
+  .tag { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; background: var(--orange-bg); color: var(--orange-text); }
+  .open-btn { height: 26px; padding: 0 10px; font-size: 11px; letter-spacing: 0.03em; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--border); background: none; cursor: pointer; font-family: var(--font); color: var(--text-secondary); transition: all 0.1s; text-decoration: none; }
+  .open-btn:hover { background: var(--orange-bg); color: var(--orange); border-color: var(--orange-border); }
 
-  /* EMPTY / LOADING */
+  /* STATE BLOCKS */
   .state-block { grid-column: 1/-1; text-align: center; padding: 56px 24px; color: var(--text-secondary); }
-  .state-block i { font-size: 36px; color: var(--text-muted); margin-bottom: 10px; display: block; }
+  .state-block i { font-size: 34px; color: var(--text-muted); margin-bottom: 10px; display: block; }
   .state-block h3 { font-size: 15px; font-weight: 500; color: var(--text-primary); margin-bottom: 5px; }
   .state-block p { font-size: 13px; }
-  .state-block a { color: var(--accent); text-decoration: none; }
-  .state-block a:hover { text-decoration: underline; }
-  .spinner { width: 28px; height: 28px; border: 2.5px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
+  .state-block a { color: var(--orange); text-decoration: none; }
+  .spinner { width: 26px; height: 26px; border: 2px solid var(--border); border-top-color: var(--orange); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
   /* HIGHLIGHT */
-  mark { background: #fde68a; border-radius: 2px; padding: 0 1px; color: inherit; }
+  mark { background: #FFE0D0; border-radius: 2px; padding: 0 1px; color: inherit; }
 
   /* TOAST */
-  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--text-primary); color: white; padding: 9px 16px; border-radius: var(--radius); font-size: 13px; font-weight: 500; z-index: 400; opacity: 0; transition: opacity 0.2s; pointer-events: none; white-space: nowrap; }
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--text-primary); color: white; padding: 9px 16px; border-radius: var(--radius); font-size: 12.5px; font-weight: 500; z-index: 400; opacity: 0; transition: opacity 0.2s; pointer-events: none; white-space: nowrap; }
   .toast.show { opacity: 1; }
 
-
+  /* FOOTER */
+  .site-footer { background: var(--surface); border-top: 1px solid var(--border); padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .footer-brand { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .footer-note { font-size: 10px; color: var(--border-strong); letter-spacing: 0.06em; text-transform: uppercase; }
 
   @media (max-width: 640px) {
     .sidebar { display: none; }
     .main { padding: 14px; }
+    .hero { padding: 20px 16px; }
   }
 </style>
 </head>
@@ -120,17 +127,22 @@
 
 <header class="topbar">
   <a class="topbar-brand" href="#">
-    <div class="brand-icon"><i class="ti ti-books"></i></div>
-    SOP Hub
+    Luminary <span class="brand-dot">·</span> Retailers
   </a>
   <div class="topbar-search">
     <i class="ti ti-search"></i>
-    <input type="text" id="searchInput" placeholder="Search SOPs… (Ctrl+K)" autocomplete="off">
+    <input type="text" id="searchInput" placeholder="Search SOPs, keywords, steps… (Ctrl+K)" autocomplete="off">
   </div>
   <div class="topbar-right">
-    <button class="btn refresh-btn" id="refreshBtn" title="Reload from Google Sheet"><i class="ti ti-refresh"></i> Refresh</button>
+    <button class="btn" id="refreshBtn"><i class="ti ti-refresh"></i> Refresh</button>
   </div>
 </header>
+
+<div class="hero">
+  <div class="hero-eyebrow">Account Specialist Portal</div>
+  <div class="hero-title">Standard operating procedures</div>
+  <div class="hero-sub">Your central reference for how we operate — search by task, keyword, or category.</div>
+</div>
 
 <div class="layout">
   <aside class="sidebar">
@@ -149,12 +161,11 @@
 
   <main class="main">
     <div class="page-header">
-      <div class="page-header-text">
-        <h1 id="pageTitle">All SOPs</h1>
-        <p id="pageSubtitle">Standard operating procedures for the Account Specialist team</p>
+      <div>
+        <div class="page-title" id="pageTitle">All SOPs</div>
+        <div class="page-sub" id="pageSubtitle">Standard operating procedures for the Account Specialist team</div>
       </div>
     </div>
-
 
     <div class="stats-row" id="statsRow">
       <div class="stat-card"><div class="stat-label">Total SOPs</div><div class="stat-value" id="statTotal">—</div></div>
@@ -177,23 +188,18 @@
   </main>
 </div>
 
+<footer class="site-footer">
+  <div class="footer-brand">Luminary Retailers</div>
+  <div class="footer-note">Internal use only</div>
+</footer>
+
 <div class="toast" id="toast"></div>
 
 <script>
 const SHEET_ID = '16Z2Xfy-6Zv3FixkX186WMGtUBUnqZnK_D8Y0A5bAoGg';
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
 
-const CAT_STYLES = [
-  { bg:'#EBF1FD', text:'#1A4FAD', icon:'ti-chart-bar' },
-  { bg:'#E1F5EE', text:'#0F5A44', icon:'ti-package' },
-  { bg:'#FAECE7', text:'#7A2D14', icon:'ti-tag' },
-  { bg:'#FAEEDA', text:'#6B3D09', icon:'ti-coin' },
-  { bg:'#FBEAF0', text:'#7A2344', icon:'ti-users' },
-  { bg:'#EEEDFE', text:'#3B2EA8', icon:'ti-settings' },
-  { bg:'#EAF3DE', text:'#2E540D', icon:'ti-list-check' },
-  { bg:'#F1EFE8', text:'#4A4840', icon:'ti-file-text' },
-];
-const CAT_ICON_MAP = {
+const CAT_ICONS = {
   'amazon operations':'ti-shopping-cart','customer service':'ti-headset',
   'inventory':'ti-package','listings':'ti-tag','advertising':'ti-speakerphone',
   'finance':'ti-coin','hr & onboarding':'ti-users','templates':'ti-template',
@@ -203,16 +209,8 @@ const CAT_ICON_MAP = {
 let sops = [];
 let activeFilter = 'all';
 let searchQuery = '';
-let catStyleCache = {};
 
-function getCatStyle(name) {
-  if (!catStyleCache[name]) {
-    const keys = Object.keys(catStyleCache);
-    catStyleCache[name] = CAT_STYLES[keys.length % CAT_STYLES.length];
-  }
-  return catStyleCache[name];
-}
-function getCatIcon(name) { return CAT_ICON_MAP[(name||'').toLowerCase()] || 'ti-file-text'; }
+function getCatIcon(name) { return CAT_ICONS[(name||'').toLowerCase()] || 'ti-file-text'; }
 function esc(s) { return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
 function highlight(text, q) {
   if (!q) return esc(text);
@@ -225,7 +223,6 @@ function fmtDate(s) {
   return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
 }
 
-/* ── FETCH FROM SHEET ── */
 async function fetchSheet() {
   showLoading();
   try {
@@ -233,53 +230,30 @@ async function fetchSheet() {
     const text = await res.text();
     const json = JSON.parse(text.replace(/^[^(]+\(/, '').replace(/\);?\s*$/, ''));
     const rows = json.table.rows;
-    catStyleCache = {};
     sops = rows.map((row, i) => {
       const c = row.c || [];
       const get = idx => (c[idx] && c[idx].v != null) ? String(c[idx].v).trim() : '';
-      return {
-        id: 'row' + i,
-        title: get(0),
-        category: get(1) || 'Other',
-        desc: get(2),
-        fileUrl: get(3),
-        date: get(4),
-      };
+      return { id:'row'+i, title:get(0), category:get(1)||'Other', desc:get(2), fileUrl:get(3), date:get(4) };
     }).filter(s => s.title);
     render();
-    showToast(`${sops.length} SOP${sops.length !== 1 ? 's' : ''} loaded`);
-  } catch(e) {
-    showError();
-  }
+    showToast(`${sops.length} SOP${sops.length!==1?'s':''} loaded`);
+  } catch(e) { showError(); }
 }
 
 function showLoading() {
-  document.getElementById('sopGrid').innerHTML = `<div class="state-block">
-    <div class="spinner"></div>
-    <h3>Loading SOPs…</h3>
-    <p>Fetching from Google Sheet</p>
-  </div>`;
+  document.getElementById('sopGrid').innerHTML = `<div class="state-block"><div class="spinner"></div><h3>Loading SOPs…</h3><p>Fetching from Google Sheet</p></div>`;
 }
-
 function showError() {
-  document.getElementById('sopGrid').innerHTML = `<div class="state-block">
-    <i class="ti ti-alert-circle"></i>
-    <h3>Couldn't load SOPs</h3>
-    <p>Make sure the Google Sheet is shared as "Anyone with the link → Viewer".<br>
-    <a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit" target="_blank">Open the sheet</a> to check, then hit Refresh.</p>
-  </div>`;
+  document.getElementById('sopGrid').innerHTML = `<div class="state-block"><i class="ti ti-alert-circle"></i><h3>Couldn't load SOPs</h3><p>Make sure the Google Sheet is shared as "Anyone with the link — Viewer".<br><a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit" target="_blank">Open the sheet</a> to check, then hit Refresh.</p></div>`;
 }
 
-/* ── RENDER ── */
 function render() {
   let filtered = [...sops];
-
   if (activeFilter === 'recent') {
-    filtered = filtered.sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0, 10);
+    filtered = filtered.sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,10);
   } else if (activeFilter !== 'all') {
     filtered = filtered.filter(s => s.category === activeFilter);
   }
-
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
     filtered = filtered.filter(s =>
@@ -289,7 +263,6 @@ function render() {
     );
   }
 
-  // Stats
   const cats = [...new Set(sops.map(s => s.category))];
   document.getElementById('statTotal').textContent = sops.length;
   document.getElementById('statCats').textContent = cats.length;
@@ -297,12 +270,10 @@ function render() {
   const last = sops.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||''))[0];
   document.getElementById('statDate').textContent = last ? fmtDate(last.date) : '—';
 
-  // Sidebar
   const catDiv = document.getElementById('sidebarCats');
   catDiv.innerHTML = '';
   cats.sort().forEach(cat => {
     const count = sops.filter(s => s.category === cat).length;
-    const style = getCatStyle(cat);
     const btn = document.createElement('button');
     btn.className = 'sidebar-item' + (activeFilter === cat ? ' active' : '');
     btn.dataset.filter = cat;
@@ -311,43 +282,34 @@ function render() {
     catDiv.appendChild(btn);
   });
 
-  // Stats / results bar
   document.getElementById('statsRow').style.display = searchQuery ? 'none' : 'flex';
   document.getElementById('resultsBar').style.display = searchQuery ? 'flex' : 'none';
   if (searchQuery) {
-    document.getElementById('resultsCount').textContent = `${filtered.length} result${filtered.length !== 1 ? 's' : ''} for "${searchQuery}"`;
+    document.getElementById('resultsCount').textContent = `${filtered.length} result${filtered.length!==1?'s':''} for "${searchQuery}"`;
   }
 
-  // Cards
   const grid = document.getElementById('sopGrid');
   if (!filtered.length) {
-    grid.innerHTML = `<div class="state-block">
-      <i class="ti ti-folder-off"></i>
-      <h3>${searchQuery ? 'No SOPs match your search' : 'No SOPs in this category yet'}</h3>
-      <p>${searchQuery ? 'Try different keywords' : `Add rows to the <a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit" target="_blank">Google Sheet</a> to get started`}</p>
-    </div>`;
+    grid.innerHTML = `<div class="state-block"><i class="ti ti-folder-off"></i><h3>${searchQuery?'No SOPs match your search':'No SOPs in this category yet'}</h3><p>${searchQuery?'Try different keywords':`Add rows to the <a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit" target="_blank">Google Sheet</a> to get started`}</p></div>`;
     return;
   }
 
   grid.innerHTML = filtered.map(sop => {
-    const style = getCatStyle(sop.category);
     const hasFile = sop.fileUrl && sop.fileUrl.startsWith('http');
     const fileLink = hasFile
-      ? `<a class="open-btn" href="${esc(sop.fileUrl)}" target="_blank"><i class="ti ti-external-link" style="font-size:12px"></i> Open</a>`
-      : `<span style="font-size:11px;color:var(--text-muted)">No file attached</span>`;
+      ? `<a class="open-btn" href="${esc(sop.fileUrl)}" target="_blank"><i class="ti ti-external-link" style="font-size:11px"></i> Open</a>`
+      : `<span style="font-size:11px;color:var(--text-muted)">No file yet</span>`;
     return `<div class="sop-card">
       <div class="sop-card-header">
-        <div class="sop-icon" style="background:${style.bg};color:${style.text}">
-          <i class="ti ${getCatIcon(sop.category)}"></i>
-        </div>
+        <div class="sop-icon"><i class="ti ${getCatIcon(sop.category)}"></i></div>
         <div>
           <div class="sop-card-title">${highlight(sop.title, searchQuery)}</div>
-          <div class="sop-card-meta">${esc(sop.category)}${sop.date ? ' · ' + fmtDate(sop.date) : ''}</div>
+          <div class="sop-card-meta">${esc(sop.category)}${sop.date?' · '+fmtDate(sop.date):''}</div>
         </div>
       </div>
-      ${sop.desc ? `<div class="sop-card-desc">${highlight(sop.desc, searchQuery)}</div>` : ''}
+      ${sop.desc?`<div class="sop-card-desc">${highlight(sop.desc,searchQuery)}</div>`:''}
       <div class="sop-card-footer">
-        <span class="tag" style="background:${style.bg};color:${style.text}">${esc(sop.category)}</span>
+        <span class="tag">${esc(sop.category)}</span>
         ${fileLink}
       </div>
     </div>`;
@@ -357,54 +319,38 @@ function render() {
 function setFilter(f) {
   activeFilter = f;
   document.querySelectorAll('.sidebar-item').forEach(el => el.classList.toggle('active', el.dataset.filter === f));
-  const labels = { all: 'All SOPs', recent: 'Recently added' };
+  const labels = { all:'All SOPs', recent:'Recently added' };
   document.getElementById('pageTitle').textContent = labels[f] || f;
   document.getElementById('pageSubtitle').textContent =
-    f === 'all' ? 'Standard operating procedures for the Account Specialist team'
-    : f === 'recent' ? 'The 10 most recently added SOPs'
+    f==='all' ? 'Standard operating procedures for the Account Specialist team'
+    : f==='recent' ? 'The 10 most recently added SOPs'
     : `SOPs in the ${f} category`;
   render();
 }
 
-// Static sidebar items
 document.querySelectorAll('.sidebar-item[data-filter]').forEach(btn => {
   btn.addEventListener('click', () => setFilter(btn.dataset.filter));
 });
-
-// Search
 document.getElementById('searchInput').addEventListener('input', e => {
-  searchQuery = e.target.value.trim();
-  render();
+  searchQuery = e.target.value.trim(); render();
 });
 document.getElementById('clearSearch').addEventListener('click', () => {
-  document.getElementById('searchInput').value = '';
-  searchQuery = '';
-  render();
+  document.getElementById('searchInput').value = ''; searchQuery = ''; render();
 });
-
-// Refresh
-document.getElementById('refreshBtn').addEventListener('click', () => {
-  catStyleCache = {};
-  fetchSheet();
-});
-
-// Keyboard
+document.getElementById('refreshBtn').addEventListener('click', fetchSheet);
 document.addEventListener('keydown', e => {
-  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+  if ((e.metaKey||e.ctrlKey) && e.key==='k') {
     e.preventDefault();
     document.getElementById('searchInput').focus();
     document.getElementById('searchInput').select();
   }
 });
-
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-// Init
 fetchSheet();
 </script>
 </body>
