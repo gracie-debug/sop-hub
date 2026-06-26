@@ -108,13 +108,7 @@
   .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--text-primary); color: white; padding: 9px 16px; border-radius: var(--radius); font-size: 13px; font-weight: 500; z-index: 400; opacity: 0; transition: opacity 0.2s; pointer-events: none; white-space: nowrap; }
   .toast.show { opacity: 1; }
 
-  /* HOW TO ADD banner */
-  .how-to-banner { background: var(--accent-bg); border: 1px solid #b8cef5; border-radius: 10px; padding: 14px 16px; margin-bottom: 22px; display: flex; gap: 12px; align-items: flex-start; }
-  .how-to-banner i { font-size: 18px; color: var(--accent-text); margin-top: 1px; flex-shrink: 0; }
-  .how-to-banner h3 { font-size: 13px; font-weight: 600; color: var(--accent-text); margin-bottom: 3px; }
-  .how-to-banner p { font-size: 12.5px; color: #2a5cb8; line-height: 1.5; }
-  .how-to-banner a { color: var(--accent-text); font-weight: 500; }
-  .banner-close { margin-left: auto; background: none; border: none; cursor: pointer; color: var(--accent-text); font-size: 16px; padding: 0; flex-shrink: 0; }
+
 
   @media (max-width: 640px) {
     .sidebar { display: none; }
@@ -161,14 +155,6 @@
       </div>
     </div>
 
-    <div class="how-to-banner" id="howToBanner">
-      <i class="ti ti-info-circle"></i>
-      <div>
-        <h3>How to add or edit SOPs</h3>
-        <p>Open the <a href="https://docs.google.com/spreadsheets/d/16Z2Xfy-6Zv3FixkX186WMGtUBUnqZnK_D8Y0A5bAoGg/edit" target="_blank">SOP Index sheet</a> and add a row: <strong>title, category, desc, fileUrl, date</strong>. Upload your PDF or Word doc to Google Drive, set sharing to "Anyone with link", and paste the link in the fileUrl column. Hit <strong>Refresh</strong> above to see changes.</p>
-      </div>
-      <button class="banner-close" id="closeBanner"><i class="ti ti-x"></i></button>
-    </div>
 
     <div class="stats-row" id="statsRow">
       <div class="stat-card"><div class="stat-label">Total SOPs</div><div class="stat-value" id="statTotal">—</div></div>
@@ -400,11 +386,6 @@ document.getElementById('clearSearch').addEventListener('click', () => {
 document.getElementById('refreshBtn').addEventListener('click', () => {
   catStyleCache = {};
   fetchSheet();
-});
-
-// Banner close
-document.getElementById('closeBanner').addEventListener('click', () => {
-  document.getElementById('howToBanner').style.display = 'none';
 });
 
 // Keyboard
